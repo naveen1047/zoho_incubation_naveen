@@ -1,20 +1,20 @@
 package _Queue;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /*
-    Methods in PriorityQueue
-
-    add
+* Queue methods
+*
+*   add
     offer
     peek
     poll
     remove
     element
-*/
-public class _PriorityQueue {
-    static Queue<String> queue = new PriorityQueue<>();
+* */
+public class _Queue {
+    static Queue<String> queue = new LinkedList<>();
 
     public static void main(String[] args) {
         // add - returns true always and throws Exception if can't add to queue
@@ -36,9 +36,8 @@ public class _PriorityQueue {
         String head = queue.poll();
         System.out.println("head: " + head);
 
-        // remove - removes based on priority
+        // remove
         String elem = queue.remove();
-        System.out.println("Priority remove: " + elem);
         print();
 
         // element
@@ -47,7 +46,7 @@ public class _PriorityQueue {
     }
 
     static void print() {
-        for (String item: queue)
+        for (String item : queue)
             System.out.print(item + " ");
         System.out.println();
     }
