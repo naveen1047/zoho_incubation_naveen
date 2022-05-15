@@ -4,6 +4,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/ex-1_collections/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/ex-1_collections/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/ex-1_collections/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
