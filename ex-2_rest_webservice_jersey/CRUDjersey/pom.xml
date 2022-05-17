@@ -27,6 +27,13 @@
 
     <dependencyManagement>
         <dependencies>
+        
+        	<dependency>
+			    <groupId>javax.persistence</groupId>
+			    <artifactId>persistence-api</artifactId>
+			    <version>1.0.2</version>
+			</dependency>
+        
             <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>
@@ -34,22 +41,53 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+        
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
     	<dependency>
+		    <groupId>javax.ejb</groupId>
+		    <artifactId>ejb-api</artifactId>
+		    <version>3.0</version>
+		    <scope>provided</scope>
+		</dependency>
+
+    
+    	<dependency>
 		    <groupId>org.glassfish.jersey.media</groupId>
 		    <artifactId>jersey-media-json-jackson</artifactId>
 		    <version>${jersey.version}</version>
 		</dependency>
-		<!-- 
+
 		<dependency>
-		    <groupId>org.glassfish.jersey.core</groupId>
-		    <artifactId>jersey-server</artifactId>
-		    <version>${jersey.version}</version>
-		</dependency>
-		-->
+		     <groupId>org.eclipse.persistence</groupId>
+		     <artifactId>eclipselink</artifactId>
+		     <version>2.5.2</version>
+		     <scope>provided</scope>
+	  	</dependency>
+	  	
+	  	<dependency>
+	         <groupId>org.hibernate.javax.persistence</groupId>
+	         <artifactId>hibernate-jpa-2.1-api</artifactId>
+	         <version>1.0.0.Final</version>
+	         <type>jar</type>
+	      </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-jdbc</artifactId>-->
+<!--            <version>5.3.20</version>-->
+<!--        </dependency>-->
+
+
+        <!--
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>

@@ -2,7 +2,23 @@ package com.naveen.domain;
 
 import java.util.Objects;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/*
+* TODO: 1. Need to implement jdbc con don't know where to create file
+*
+* */
+
+@Entity
+@Table(name = "products")
+@XmlRootElement
+@NamedQueries({
+	@NamedQuery(name = "Product.findAll",
+			query = "SELECT * FROM PRODUCTS")
+})
 public class Product {
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
     private String name;
     private float price;
