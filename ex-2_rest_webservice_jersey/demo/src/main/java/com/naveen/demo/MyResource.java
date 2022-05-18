@@ -1,4 +1,4 @@
-package com.naveen.jersey_db;
+package com.naveen.demo;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -20,6 +20,6 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+        return "Got ist!";
     }
 }
