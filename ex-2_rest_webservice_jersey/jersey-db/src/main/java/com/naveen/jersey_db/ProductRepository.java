@@ -46,11 +46,12 @@ public class ProductRepository {
 	
 	public Product getProduct(int id) {
 		Product p = new Product();
-		String sql = "SELECT * FROM products where id = " + id;
+		String sql = "SELECT * FROM products where id = (?)";
 		
 		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
 				 p = new Product(
