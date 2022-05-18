@@ -9,6 +9,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
 @Path("products")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
     private ProductService service;
 
@@ -17,27 +19,23 @@ public class ProductResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Product> getProducts() {
         return service.getProducts();
     }
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Product getProduct(@PathParam("id") int id) {
         return service.getProduct(id);
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response setProduct(Product p) {
         service.addProduct(p);
         return Response.ok().build();
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response editProduct(Product p) {
         service.editProduct(p);
         return Response.ok().build();
@@ -45,7 +43,6 @@ public class ProductResource {
 
     @DELETE
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteProduct(@PathParam("id") int id) {
         service.deleteProduct(id);
         return Response.ok().build();

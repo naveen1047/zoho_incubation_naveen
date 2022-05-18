@@ -1,5 +1,6 @@
 package com.naveen.jersey_db.product.repo;
 
+import com.naveen.jersey_db.product.exception.CustomException;
 import com.naveen.jersey_db.product.exception.ProductNotFoundException;
 import com.naveen.jersey_db.product.models.Product;
 
@@ -8,7 +9,7 @@ import java.util.*;
 
 public class ProductRepository {
 
-    Connection con = null;
+    Connection con;
 
     public ProductRepository() {
 
@@ -20,7 +21,7 @@ public class ProductRepository {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
-            System.out.print(e);
+            throw new CustomException(e.getMessage());
         }
     }
 
@@ -39,15 +40,14 @@ public class ProductRepository {
                 products.add(p);
             }
         } catch (SQLException e) {
-            System.out.println(e);
-            e.printStackTrace();
+            throw new CustomException(e.getMessage());
         }
 
         return products;
     }
 
     public Product getProduct(int id) {
-        Product p = new Product();
+        Product p;
         String sql = "SELECT * FROM products where id = (?)";
 
         try {
@@ -63,8 +63,7 @@ public class ProductRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
-            e.printStackTrace();
+            throw new CustomException(e.getMessage());
         }
         return p;
     }
@@ -73,6 +72,16 @@ public class ProductRepository {
         String sql = "insert into products value (?, ?, ?)";
 
         try {
+            if (p.getId() <= 0) {
+                throw new CustomException("id should not be empty");
+            }
+            if (p.getName() == null) {
+                throw new CustomException("name should not be empty");
+
+            }
+            if (p.getPrice() <= 0.0) {
+                throw new CustomException("price should not less than or equals to zero");
+            }
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setInt(1, p.getId());
@@ -86,6 +95,17 @@ public class ProductRepository {
     }
 
     public Product editProduct(Product p) {
+        if (p.getId() <= 0) {
+            throw new CustomException("id should not be empty");
+        }
+        if (p.getName() == null) {
+            throw new CustomException("name should not be empty");
+
+        }
+        if (p.getPrice() <= 0.0) {
+            throw new CustomException("price should not less than or equals to zero");
+        }
+
         String sql = "UPDATE products "
                 + "SET name = ?, price = ? "
                 + "WHERE id = ?";
@@ -96,10 +116,13 @@ public class ProductRepository {
             st.setString(1, p.getName());
             st.setDouble(2, p.getPrice());
             st.setInt(3, p.getId());
-            st.executeUpdate();
+            if (st.executeUpdate() == 0) {
+                throw new CustomException("id incorrect ");
+            }
 
         } catch (Exception e) {
-            System.out.print(e);
+            System.out.println(e.toString());
+            throw new CustomException(e.getMessage());
         }
         return p;
     }
@@ -111,10 +134,12 @@ public class ProductRepository {
 
         try {
             PreparedStatement st = con.prepareStatement(sql);
-            st.executeUpdate();
+            if (st.executeUpdate() == 0) {
+                throw new CustomException("id not found");
+            }
 
         } catch (Exception e) {
-            System.out.print(e);
+            throw new CustomException(e.getMessage());
         }
 
     }
