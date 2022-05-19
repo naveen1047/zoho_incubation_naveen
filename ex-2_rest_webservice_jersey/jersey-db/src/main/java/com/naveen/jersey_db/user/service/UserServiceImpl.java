@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         user.setId(userRepoFake.getAllUser().getUsers().size() + 1);
         user.setUri("/user-management/" + user.getId());
+        System.out.println(user.getRoles());
         return userRepoFake.createUser(user);
     }
 
@@ -45,11 +46,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepoFake.getAllUser()
+        User user = userRepoFake.getAllUser()
                 .getUsers()
                 .stream()
                 .filter(u -> u.getName().equals(username))
                 .findFirst()
                 .get();
+
+        if (user.getId() <= 0)
+            return null;
+        return user;
     }
 }

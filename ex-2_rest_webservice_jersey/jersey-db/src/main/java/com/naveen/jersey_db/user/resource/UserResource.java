@@ -70,8 +70,7 @@ public class UserResource {
         if (user == null) {
             return Response.status(404).build();
         }
-        temp.setName(user.getName());
-        userService.updateUser(temp.getId(), temp);
+        userService.updateUser(temp.getId(), user);
         return Response.status(200).entity(temp).build();
     }
 
