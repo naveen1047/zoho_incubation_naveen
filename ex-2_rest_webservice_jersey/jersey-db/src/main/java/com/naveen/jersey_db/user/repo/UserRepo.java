@@ -15,11 +15,13 @@ public class UserRepo {
         user1.setId(1);
         user1.setName("John");
         user1.setUri("/user-management/1");
+        user1.setPassword("John");
         user1.setRoles(new HashSet<>(Arrays.asList(Role.ADMIN, Role.CUSTOMER)));
 
         User user2 = new User();
         user2.setId(2);
         user2.setName("Harry");
+        user2.setPassword("Harry");
         user2.setUri("/user-management/2");
 
         DB.put(user1.getId(), user1);

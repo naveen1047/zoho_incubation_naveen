@@ -42,4 +42,14 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int id) {
         userRepo.deleteUser(id);
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepo.getAllUser()
+                .getUsers()
+                .stream()
+                .filter(u -> u.getName().equals(username))
+                .findFirst()
+                .get();
+    }
 }

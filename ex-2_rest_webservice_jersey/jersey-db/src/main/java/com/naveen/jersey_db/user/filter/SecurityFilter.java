@@ -1,9 +1,12 @@
 package com.naveen.jersey_db.user.filter;
 
 
+import com.naveen.jersey_db.user.models.Role;
+import com.naveen.jersey_db.user.models.User;
+import com.naveen.jersey_db.user.service.UserService;
+import com.naveen.jersey_db.user.util.DependenciesFactory;
 import jakarta.annotation.security.DenyAll;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ResourceInfo;
@@ -15,10 +18,6 @@ import jakarta.ws.rs.ext.Provider;
 import java.lang.reflect.Method;
 import java.util.*;
 
-/**
- * This filter verify the access permissions for a user based on
- * user name and password provided in request
- */
 @Provider
 public class SecurityFilter implements ContainerRequestFilter {
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
@@ -26,6 +25,13 @@ public class SecurityFilter implements ContainerRequestFilter {
     private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED).build();
     private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN).build();
     private static final Response SERVER_ERROR = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    private static User currentUser;
+
+    UserService userService;
+
+    public SecurityFilter() {
+        this.userService = DependenciesFactory.getProductService();
+    }
 
     @Context
     private ResourceInfo resourceInfo;
@@ -70,42 +76,40 @@ public class SecurityFilter implements ContainerRequestFilter {
             final String username = tokenizer.nextToken();
             final String password = tokenizer.nextToken();
 
-            //Verifying Username and password
-//            if (!(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password"))) {
             if (!(verifyUsernamePassword(username, password))) {
                 requestContext.abortWith(ACCESS_DENIED);
                 return;
             }
 
-            //Verify user access
-            if (method.isAnnotationPresent(RolesAllowed.class)) {
-                RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
-                Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
-
-                //Is user valid?
-                if (!isUserAllowed(username, password, rolesSet)) {
-                    requestContext.abortWith(ACCESS_DENIED);
-                    return;
-                }
+            if (currentUser == null) {
+                requestContext.abortWith(ACCESS_DENIED);
+                return;
             }
+
+            if (!isUserAllowed(username, password, currentUser.getRoles())) {
+                    requestContext.abortWith(ACCESS_DENIED);
+                return;
+            }
+
         }
     }
 
+
     private boolean verifyUsernamePassword(String username, String password) {
+        try {
+            User user = userService.getUserByUsername(username);
+            currentUser = user;
+            return user.getPassword().equals(password);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return false;
     }
 
-    private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
+    private boolean isUserAllowed(final String username, final String password, final Set<Role> rolesSet) {
         boolean isAllowed = false;
 
-        //Step 1. Fetch password from database and match with password in argument
-        //If both match then get the defined role for user from database and continue; else return isAllowed [false]
-        //Access the database and do this part yourself
-        //String userRole = userMgr.getUserRole(username);
-        String userRole = "ADMIN";
-
-        //Step 2. Verify user role
-        if (rolesSet.contains(userRole)) {
+        if (rolesSet.contains(Role.ADMIN)) {
             isAllowed = true;
         }
         return isAllowed;
