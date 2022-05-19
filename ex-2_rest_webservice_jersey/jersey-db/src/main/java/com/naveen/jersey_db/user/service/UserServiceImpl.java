@@ -2,23 +2,23 @@ package com.naveen.jersey_db.user.service;
 
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
-import com.naveen.jersey_db.user.repo.UserRepo;
+import com.naveen.jersey_db.user.repo.UserRepoFake;
 
 public class UserServiceImpl implements UserService {
-    private final UserRepo userRepo;
+    private final UserRepoFake userRepoFake;
 
-    public UserServiceImpl(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public UserServiceImpl(UserRepoFake userRepoFake) {
+        this.userRepoFake = userRepoFake;
     }
 
     @Override
     public Users getAllUsers() {
-        return userRepo.getAllUser();
+        return userRepoFake.getAllUser();
     }
 
     @Override
     public User getUserById(int id) {
-        return userRepo.getAllUser()
+        return userRepoFake.getAllUser()
                 .getUsers()
                 .stream()
                 .filter(u -> u.getId() == id)
@@ -28,24 +28,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        user.setId(userRepo.getAllUser().getUsers().size() + 1);
+        user.setId(userRepoFake.getAllUser().getUsers().size() + 1);
         user.setUri("/user-management/" + user.getId());
-        return userRepo.createUser(user);
+        return userRepoFake.createUser(user);
     }
 
     @Override
     public User updateUser(int id, User user) {
-        return userRepo.updateUser(id, user);
+        return userRepoFake.updateUser(id, user);
     }
 
     @Override
     public void deleteUser(int id) {
-        userRepo.deleteUser(id);
+        userRepoFake.deleteUser(id);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepo.getAllUser()
+        return userRepoFake.getAllUser()
                 .getUsers()
                 .stream()
                 .filter(u -> u.getName().equals(username))

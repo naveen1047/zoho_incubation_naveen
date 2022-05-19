@@ -3,11 +3,10 @@ package com.naveen.jersey_db.user.repo;
 import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
-import org.glassfish.jersey.internal.guava.Sets;
 
 import java.util.*;
 
-public class UserRepo {
+public class UserRepoFake {
     private static Map<Integer, User> DB = new HashMap<>();
 
     static {

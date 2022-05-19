@@ -1,6 +1,7 @@
 package com.naveen.jersey_db.user.filter;
 
 
+import com.naveen.jersey_db.user.ErrorMessage;
 import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.service.UserService;
@@ -20,11 +21,20 @@ import java.util.*;
 
 @Provider
 public class SecurityFilter implements ContainerRequestFilter {
+    private static final String docUrl = "http://my-website.com/doc";
+
+    private static final ErrorMessage unauthorizedMessage =
+            new ErrorMessage(docUrl, Response.Status.UNAUTHORIZED.getStatusCode(), "Access denied");
+    private static final ErrorMessage forbiddenMessage =
+            new ErrorMessage(docUrl, Response.Status.FORBIDDEN.getStatusCode(), "Access forbidden");
+    private static final ErrorMessage internalServerErrorMessage =
+            new ErrorMessage(docUrl, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "internal server error");
+
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
     private static final String AUTHENTICATION_SCHEME = "Basic";
-    private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED).build();
-    private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN).build();
-    private static final Response SERVER_ERROR = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED).entity(unauthorizedMessage).build();
+    private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN).entity(forbiddenMessage).build();
+    private static final Response SERVER_ERROR = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(internalServerErrorMessage).build();
     private static User currentUser;
 
     UserService userService;
@@ -87,7 +97,7 @@ public class SecurityFilter implements ContainerRequestFilter {
             }
 
             if (!isUserAllowed(username, password, currentUser.getRoles())) {
-                    requestContext.abortWith(ACCESS_DENIED);
+                requestContext.abortWith(ACCESS_DENIED);
                 return;
             }
 

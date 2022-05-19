@@ -78,7 +78,6 @@ public class UserResource {
     @DELETE
     @Path("/{id}")
     @RolesAllowed("ADMIN")
-    @PermitAll
     public Response deleteUser(@PathParam("id") int id) throws URISyntaxException {
         User user = userService.getUserById(id);
         if (user != null) {
