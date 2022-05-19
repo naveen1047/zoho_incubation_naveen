@@ -1,4 +1,4 @@
-package com.naveen.jersey_db.product.resourse;
+package com.naveen.jersey_db.product.resource;
 
 import java.util.*;
 
