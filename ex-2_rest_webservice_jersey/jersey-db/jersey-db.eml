@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component LANGUAGE_LEVEL="JDK_1_8" jdk="14" jdk_type="JavaSDK">
+<component LANGUAGE_LEVEL="JDK_1_9" jdk="14" jdk_type="JavaSDK">
 	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
 	<contentEntry url="file://$MODULE_DIR$">
 		<excludeFolder url="file://$MODULE_DIR$/target"/>
 	</contentEntry>
 	<lib name="Maven: org.projectlombok:lombok:1.18.24" scope="PROVIDED"/>
 	<levels>
+		<level name="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER" value="project"/>
 		<level name="Maven: mysql:mysql-connector-java:8.0.29" value="project"/>
 		<level name="Maven: com.google.protobuf:protobuf-java:3.19.4" value="project"/>
 		<level name="Maven: org.projectlombok:lombok:1.18.24" value="project"/>

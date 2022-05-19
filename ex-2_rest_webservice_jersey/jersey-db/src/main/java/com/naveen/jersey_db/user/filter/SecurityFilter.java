@@ -71,7 +71,8 @@ public class SecurityFilter implements ContainerRequestFilter {
             final String password = tokenizer.nextToken();
 
             //Verifying Username and password
-            if (!(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password"))) {
+//            if (!(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password"))) {
+            if (!(verifyUsernamePassword(username, password))) {
                 requestContext.abortWith(ACCESS_DENIED);
                 return;
             }
@@ -88,6 +89,10 @@ public class SecurityFilter implements ContainerRequestFilter {
                 }
             }
         }
+    }
+
+    private boolean verifyUsernamePassword(String username, String password) {
+        return false;
     }
 
     private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
