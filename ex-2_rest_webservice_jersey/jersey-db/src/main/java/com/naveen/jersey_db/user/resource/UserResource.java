@@ -26,11 +26,18 @@ public class UserResource {
         userService = DependenciesFactory.getUserService();
     }
 
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @PermitAll
+//    public Users getAllUsers() {
+//        return userService.getAllUsers();
+//    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
-    public Users getAllUsers() {
-        return userService.getAllUsers();
+    public Users getAllUsersWithRoles() {
+        return userService.getAllUsersWithRole();
     }
 
     @POST

@@ -18,6 +18,7 @@ import jakarta.ws.rs.ext.Provider;
 
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Provider
 public class SecurityFilter implements ContainerRequestFilter {
@@ -122,7 +123,7 @@ public class SecurityFilter implements ContainerRequestFilter {
             currentUser = user;
             System.out.println(user.getName() + " pswd: "
                     + user.getPassword()
-                    + "uPswd: " + password + " " + user.getPassword().equals(password));
+                    + "\nuserPwd: " + password + " " + user.getPassword().equals(password));
             return user.getPassword().equals(password);
         } catch (Exception e) {
             System.out.println(e);
@@ -131,11 +132,12 @@ public class SecurityFilter implements ContainerRequestFilter {
     }
 
     private boolean isUserAllowed(final String username, final String password, final Set<Role> rolesSet) {
-        boolean isAllowed = false;
+        AtomicBoolean isAllowed = new AtomicBoolean(false);
 
-        if (rolesSet.contains(Role.ADMIN)) {
-            isAllowed = true;
-        }
-        return isAllowed;
+        rolesSet.forEach(role -> {
+                    if (role.getName().equals("ADMIN")) isAllowed.set(true);
+                });
+        System.out.println(isAllowed.get());
+        return isAllowed.get();
     }
 }

@@ -25,6 +25,10 @@ public class User {
     @XmlAttribute(name = "roles")
     private Set<Role> roles;
 
+//    @XmlAttribute(name = "role")
+//    private Role role;
+
+
     @XmlAttribute(name = "name")
     private String name;
 }

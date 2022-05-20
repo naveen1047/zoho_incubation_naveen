@@ -15,7 +15,7 @@ public class UserRepoFake {
         user1.setName("John");
         user1.setUri("/user-management/1");
         user1.setPassword("John");
-        user1.setRoles(new HashSet<>(Arrays.asList(Role.ADMIN, Role.CUSTOMER)));
+//        user1.setRoles(new HashSet<>(Arrays.asList(Role.ADMIN, Role.CUSTOMER)));
 
         User user2 = new User();
         user2.setId(2);

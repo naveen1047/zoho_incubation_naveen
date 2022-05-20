@@ -14,5 +14,7 @@ public interface UserService {
 
     void deleteUser(int id);
 
+    Users getAllUsersWithRole();
+
 //    User getUserByUsername(String username);
 }

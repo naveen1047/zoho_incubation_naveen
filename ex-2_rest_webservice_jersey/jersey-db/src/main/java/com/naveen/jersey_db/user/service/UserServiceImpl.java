@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
         userRepo.deleteUser(id);
     }
 
+    @Override
+    public Users getAllUsersWithRole() {
+        return userRepo.getAllUserAndRoles();
+    }
+
 //    @Override
 //    public User getUserByUsername(String id) {
 //        User user = userRepo.getAllUser()

@@ -44,6 +44,11 @@ public class UserServiceImplFake implements UserService {
         userRepoFake.deleteUser(id);
     }
 
+    @Override
+    public Users getAllUsersWithRole() {
+        return null;
+    }
+
 //    @Override
 //    public User getUserByUsername(String username) {
 //        User user = userRepoFake.getAllUser()
