@@ -23,7 +23,7 @@ public class UserResource {
     UserService userService;
 
     public UserResource() {
-        userService = DependenciesFactory.getProductService();
+        userService = DependenciesFactory.getUserService();
     }
 
     @GET

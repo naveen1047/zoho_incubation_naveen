@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class User {
-    @XmlAttribute(name = "user")
+    @XmlAttribute(name = "id")
     private int id;
 
     @XmlAttribute(name = "password")

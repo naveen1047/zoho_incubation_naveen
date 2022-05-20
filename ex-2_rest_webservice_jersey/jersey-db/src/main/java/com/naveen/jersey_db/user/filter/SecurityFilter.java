@@ -16,7 +16,6 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -48,7 +47,7 @@ public class SecurityFilter implements ContainerRequestFilter {
     UserService userService;
 
     public SecurityFilter() {
-        this.userService = DependenciesFactory.getProductService();
+        this.userService = DependenciesFactory.getUserService();
     }
 
     @Context
@@ -89,12 +88,15 @@ public class SecurityFilter implements ContainerRequestFilter {
                 return;
             }
 
-            //Split username and password tokens
+            //Split id and password tokens
             final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-            final String username = tokenizer.nextToken();
+            final String id = tokenizer.nextToken();
             final String password = tokenizer.nextToken();
 
-            if (!(verifyUsernamePassword(username, password))) {
+            System.out.println(id);
+            System.out.println(password);
+
+            if (!(verifyIdPassword(Integer.parseInt(id), password))) {
                 requestContext.abortWith(ACCESS_DENIED);
                 return;
             }
@@ -104,7 +106,7 @@ public class SecurityFilter implements ContainerRequestFilter {
                 return;
             }
 
-            if (!isUserAllowed(username, password, currentUser.getRoles())) {
+            if (!isUserAllowed(id, password, currentUser.getRoles())) {
                 requestContext.abortWith(ACCESS_DENIED);
                 return;
             }
@@ -113,10 +115,14 @@ public class SecurityFilter implements ContainerRequestFilter {
     }
 
 
-    private boolean verifyUsernamePassword(String username, String password) {
+    private boolean verifyIdPassword(int id, String password) {
         try {
-            User user = userService.getUserByUsername(username);
+//            User user = userService.getUserByUsername(id);
+            User user = userService.getUserById(id);
             currentUser = user;
+            System.out.println(user.getName() + " pswd: "
+                    + user.getPassword()
+                    + "uPswd: " + password + " " + user.getPassword().equals(password));
             return user.getPassword().equals(password);
         } catch (Exception e) {
             System.out.println(e);
