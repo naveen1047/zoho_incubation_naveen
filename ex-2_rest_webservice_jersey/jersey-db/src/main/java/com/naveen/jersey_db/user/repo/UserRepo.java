@@ -199,8 +199,8 @@ public class UserRepo {
     }
 
     public User createUser(User user) {
-        String sql = "INSERT INTO users " +
-                "(password, name, uri)" +
+        String sql = "INSERT INTO users\n" +
+                "(password, name, url)\n" +
                 "VALUES (?, ?, ?)";
 
         try {
@@ -211,8 +211,9 @@ public class UserRepo {
             st.setString(3, user.getUri());
             st.executeUpdate();
         } catch (Exception e) {
-            System.out.println("erroe");
+            System.out.println("error");
             System.out.println(e.getMessage());
+            e.printStackTrace();
             throw new CustomException(e.getMessage());
         }
         return getUserByUsernamePassword(user.getName(), user.getPassword());
@@ -220,8 +221,8 @@ public class UserRepo {
 
     private User getUserByUsernamePassword(String name, String password) {
         User user;
-        String sql = "SELECT * FROM users" +
-                "WHERE username = (?) AND password = (?)";
+        String sql = "SELECT * FROM users\n" +
+                "WHERE name = (?) AND password = (?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -236,6 +237,7 @@ public class UserRepo {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException(e.getMessage()
             );
         }
