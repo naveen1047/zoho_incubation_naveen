@@ -28,6 +28,14 @@ public class ProductResource {
         return service.getProducts();
     }
 
+    @Path("/download")
+    @GET
+    @PermitAll
+    public List<Product> getProductsCSV() {
+        return service.getProductsCSV();
+    }
+
+
     @GET
     @Path("{id}")
     @PermitAll
