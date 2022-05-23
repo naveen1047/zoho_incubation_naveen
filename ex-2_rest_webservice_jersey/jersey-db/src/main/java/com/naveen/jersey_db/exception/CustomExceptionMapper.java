@@ -1,4 +1,4 @@
-package com.naveen.jersey_db.product.exception;
+package com.naveen.jersey_db.exception;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;

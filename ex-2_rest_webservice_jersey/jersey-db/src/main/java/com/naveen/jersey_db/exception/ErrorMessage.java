@@ -1,4 +1,4 @@
-package com.naveen.jersey_db.user.exception;
+package com.naveen.jersey_db.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
