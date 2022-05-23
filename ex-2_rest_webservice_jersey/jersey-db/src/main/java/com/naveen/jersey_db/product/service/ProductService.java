@@ -1,6 +1,7 @@
 package com.naveen.jersey_db.product.service;
 
 import com.naveen.jersey_db.product.models.Product;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ProductService {
     List<Product> getProductsCSV();
     Product getProduct(int id);
 
-    Product addProduct(Product product);
+    Response addProduct(Product product);
 
     Product editProduct(Product product);
 

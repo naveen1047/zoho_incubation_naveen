@@ -8,6 +8,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import jakarta.ws.rs.core.Response;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product addProduct(Product product) {
+    public Response addProduct(Product product) {
         return repository.addProduct(product);
     }
 

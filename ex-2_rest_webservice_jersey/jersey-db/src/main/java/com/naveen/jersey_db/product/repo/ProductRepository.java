@@ -1,8 +1,9 @@
 package com.naveen.jersey_db.product.repo;
 
-import com.naveen.jersey_db.product.exception.CustomException;
+import com.naveen.jersey_db.exception.CustomException;
 import com.naveen.jersey_db.product.exception.ProductNotFoundException;
 import com.naveen.jersey_db.product.models.Product;
+import jakarta.ws.rs.core.Response;
 
 import java.sql.*;
 import java.util.*;
@@ -48,7 +49,8 @@ public class ProductRepository {
 
     public Product getProduct(int id) {
         Product p;
-        String sql = "SELECT * FROM products where id = (?)";
+        String sql = "SELECT * FROM products\n" +
+                " WHERE id = (?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -68,30 +70,31 @@ public class ProductRepository {
         return p;
     }
 
-    public Product addProduct(Product p) {
-        String sql = "insert into products value (?, ?, ?)";
+    public Response addProduct(Product p) {
+        String sql = "INSERT INTO products \n" +
+                "(name, price)\n" +
+                "VALUES (?, ?)";
 
         try {
-            if (p.getId() <= 0) {
-                throw new CustomException("id should not be empty");
-            }
             if (p.getName() == null) {
                 throw new CustomException("name should not be empty");
-
             }
             if (p.getPrice() <= 0.0) {
                 throw new CustomException("price should not less than or equals to zero");
             }
             PreparedStatement st = con.prepareStatement(sql);
 
-            st.setInt(1, p.getId());
-            st.setString(2, p.getName());
-            st.setDouble(3, p.getPrice());
-            st.executeUpdate();
+            st.setString(1, p.getName());
+            st.setDouble(2, p.getPrice());
+
+            System.out.println(p.getName());
+            if (st.executeUpdate() == 0) {
+                throw new CustomException("something went wrong");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return p;
+        return Response.status(Response.Status.CREATED).build();
     }
 
     public Product editProduct(Product p) {

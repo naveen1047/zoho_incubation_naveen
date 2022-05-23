@@ -3,7 +3,6 @@ package com.naveen.jersey_db.product.resource;
 import com.naveen.jersey_db.product.models.Product;
 import com.naveen.jersey_db.product.service.ProductService;
 import com.naveen.jersey_db.product.util.DependenciesFactory;
-import com.naveen.jersey_db.user.models.Role;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
@@ -16,6 +15,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
+
     private ProductService service;
 
     public ProductResource() {
@@ -46,22 +46,22 @@ public class ProductResource {
     @POST
     @RolesAllowed("ADMIN")
     public Response setProduct(Product p) {
-        service.addProduct(p);
-        return Response.ok().build();
+        return service.addProduct(p);
+
     }
 
     @PUT
     @RolesAllowed("ADMIN")
-    public Response editProduct(Product p) {
-        service.editProduct(p);
-        return Response.ok().build();
+    public Product editProduct(Product p) {
+        return service.editProduct(p);
+
     }
 
     @DELETE
     @Path("{id}")
     @RolesAllowed("ADMIN")
-    public Response deleteProduct(@PathParam("id") int id) {
+    public void deleteProduct(@PathParam("id") int id) {
         service.deleteProduct(id);
-        return Response.ok().build();
+
     }
 }

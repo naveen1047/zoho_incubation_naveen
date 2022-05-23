@@ -1,6 +1,6 @@
 package com.naveen.jersey_db.user.repo;
 
-import com.naveen.jersey_db.product.exception.CustomException;
+import com.naveen.jersey_db.exception.CustomException;
 import com.naveen.jersey_db.user.exception.UserNotFoundException;
 import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
