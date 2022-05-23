@@ -16,5 +16,7 @@ public interface UserService {
 
     Users getAllUsersWithRole();
 
+    Users getAllUsersWithRoleCSV();
+
 //    User getUserByUsername(String username);
 }

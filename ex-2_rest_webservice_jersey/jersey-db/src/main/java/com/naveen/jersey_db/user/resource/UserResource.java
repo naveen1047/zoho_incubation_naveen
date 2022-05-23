@@ -40,6 +40,14 @@ public class UserResource {
         return userService.getAllUsersWithRole();
     }
 
+    @Path("/download")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @PermitAll
+    public Users getAllUsersWithRolesCSV() {
+        return userService.getAllUsersWithRoleCSV();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @PermitAll

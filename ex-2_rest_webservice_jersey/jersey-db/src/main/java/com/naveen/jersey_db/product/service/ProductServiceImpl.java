@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService {
                             value -> {
                                 return new String[]
                                         {Integer.toString(value.getId()),
-                                        value.getName(),
-                                        Double.toString(value.getPrice())};
+                                                value.getName(),
+                                                Double.toString(value.getPrice())};
                             }
                     )
                     .collect(Collectors.toList()));

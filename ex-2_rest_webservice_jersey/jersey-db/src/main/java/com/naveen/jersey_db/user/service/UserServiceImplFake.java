@@ -49,6 +49,11 @@ public class UserServiceImplFake implements UserService {
         return null;
     }
 
+    @Override
+    public Users getAllUsersWithRoleCSV() {
+        return null;
+    }
+
 //    @Override
 //    public User getUserByUsername(String username) {
 //        User user = userRepoFake.getAllUser()
