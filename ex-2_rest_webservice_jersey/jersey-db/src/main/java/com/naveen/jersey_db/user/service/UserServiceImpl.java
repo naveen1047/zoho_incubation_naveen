@@ -1,7 +1,7 @@
 package com.naveen.jersey_db.user.service;
 
 
-import com.naveen.jersey_db.product.models.Product;
+import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
 import com.naveen.jersey_db.user.repo.UserRepo;
@@ -9,7 +9,7 @@ import com.opencsv.CSVWriter;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -81,6 +81,11 @@ public class UserServiceImpl implements UserService {
 
 
         return users;
+    }
+
+    @Override
+    public User setUserRolesById(int id, Set<Role> roleSet) {
+        return userRepo.setUserRolesById(id, roleSet);
     }
 
 //    @Override

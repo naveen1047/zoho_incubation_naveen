@@ -1,5 +1,6 @@
 package com.naveen.jersey_db.user.resource;
 
+import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
 import com.naveen.jersey_db.user.service.UserService;
@@ -15,6 +16,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "users")
@@ -66,6 +69,22 @@ public class UserResource {
     @PermitAll
     public Response getUserById(@PathParam("id") int id) throws URISyntaxException {
         User user = userService.getUserById(id);
+        if (user == null) {
+            return Response.status(404).build();
+        }
+        return Response
+                .status(200)
+                .entity(user)
+                .contentLocation(new URI("/user-management/" + id)).build();
+    }
+
+    @PUT
+    @Path("/setrole/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @PermitAll
+    public Response setRolesById(@PathParam("id") int id, List<Role> roleList) throws URISyntaxException {
+        User user = userService.getUserById(id);
+        userService.setUserRolesById(id, roleList.stream().collect(Collectors.toSet()));
         if (user == null) {
             return Response.status(404).build();
         }
