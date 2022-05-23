@@ -1,8 +1,11 @@
 package com.naveen.jersey_db.user.service;
 
+import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
 import com.naveen.jersey_db.user.repo.UserRepoFake;
+
+import java.util.Set;
 
 public class UserServiceImplFake implements UserService {
     private final UserRepoFake userRepoFake;
@@ -46,6 +49,16 @@ public class UserServiceImplFake implements UserService {
 
     @Override
     public Users getAllUsersWithRole() {
+        return null;
+    }
+
+    @Override
+    public Users getAllUsersWithRoleCSV() {
+        return null;
+    }
+
+    @Override
+    public User setUserRolesById(int id, Set<Role> roleSet) {
         return null;
     }
 

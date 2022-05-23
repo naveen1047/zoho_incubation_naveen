@@ -7,6 +7,7 @@ import java.util.List;
 public interface ProductService {
     List<Product> getProducts();
 
+    List<Product> getProductsCSV();
     Product getProduct(int id);
 
     Product addProduct(Product product);

@@ -209,6 +209,7 @@ public class UserRepo {
             st.setString(1, user.getPassword());
             st.setString(2, user.getName());
             st.setString(3, user.getUri());
+
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println("error");
@@ -257,8 +258,8 @@ public class UserRepo {
             System.out.println(currentUser.getName());
             System.out.println(currentUser.getUri());
 
-            ps.setString(1, user.getName() == null? currentUser.getName() : user.getName());
-            ps.setString(2, user.getUri() == null? currentUser.getUri() : user.getUri());
+            ps.setString(1, user.getName() == null ? currentUser.getName() : user.getName());
+            ps.setString(2, user.getUri() == null ? currentUser.getUri() : user.getUri());
             ps.setInt(3, id);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -282,5 +283,60 @@ public class UserRepo {
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
+    }
+
+    public User setUserRolesById(int id, Set<Role> roleSet) {
+        roleSet.stream()
+                .forEach(
+                        role -> {
+                            String sql = "insert into user_role\n" +
+                                    "values(?, ?)";
+
+                            int roleId = getRoleIdByName(role.getName());
+
+                            try {
+                                PreparedStatement st = con.prepareStatement(sql);
+                                st.setInt(1, id);
+
+                                st.setInt(2, roleId);
+                                // updating role
+                                if (st.executeUpdate() == 0) {
+                                    throw new CustomException("id not found");
+                                }
+
+                            } catch (Exception e) {
+                                throw new CustomException(e.getMessage() + " or " + " updated ");
+                            }
+                        }
+                );
+
+        return getUserById(id);
+    }
+
+    private int getRoleIdByName(String name) {
+        String sql = "select id from roles\n" +
+                "where name = (?)";
+
+        int id = -1;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+
+            ResultSet rs = ps.executeQuery();
+            System.out.println("asdfas");
+            if (rs.next()) {
+                id = rs.getInt(1);
+            } else {
+                throw new UserNotFoundException(id + " not found.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(e.getMessage());
+        }
+
+        System.out.println(id);
+        return id;
     }
 }
