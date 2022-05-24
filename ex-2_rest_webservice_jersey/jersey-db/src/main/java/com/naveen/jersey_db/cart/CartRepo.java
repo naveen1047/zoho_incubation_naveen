@@ -2,6 +2,7 @@ package com.naveen.jersey_db.cart;
 
 import com.naveen.jersey_db.exception.CustomException;
 import com.naveen.jersey_db.product.models.Product;
+import jakarta.ws.rs.core.Response;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class CartRepo {
         return products;
     }
 
-    public void addCartItem(int id, int cartId) {
+    public Response addCartItem(int id, int cartId) {
         String sql = "INSERT INTO cart_product " +
                 "VALUES (?, ?)";
 
@@ -69,6 +70,8 @@ public class CartRepo {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        return Response.status(Response.Status.CREATED).build();
     }
 
     public void deleteCart(int id) {

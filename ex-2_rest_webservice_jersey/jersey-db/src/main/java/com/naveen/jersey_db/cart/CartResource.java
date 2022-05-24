@@ -5,6 +5,7 @@ import com.naveen.jersey_db.user.filter.SecurityFilter;
 import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class CartResource {
     @Path("/{id}")
     @PUT
     @PermitAll
-    public void putCart(@PathParam("id") int id, @QueryParam("cartId") int cartId) {
-         service.addCartItem(id, cartId);
+    public Response putCart(@PathParam("id") int id, @QueryParam("cartId") int cartId) {
+         return service.addCartItem(id, cartId);
     }
 
     @Path("/{id}")
