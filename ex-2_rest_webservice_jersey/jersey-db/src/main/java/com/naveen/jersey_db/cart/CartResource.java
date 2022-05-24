@@ -18,6 +18,7 @@ public class CartResource {
 
     public CartResource() {
         service = DependenciesFactory.getUserService();
+
     }
 
     @Path("/{id}")
