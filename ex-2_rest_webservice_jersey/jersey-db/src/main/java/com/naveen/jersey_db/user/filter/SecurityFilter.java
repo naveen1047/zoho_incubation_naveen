@@ -45,6 +45,10 @@ public class SecurityFilter implements ContainerRequestFilter {
             .build();
     private static User currentUser;
 
+    public static User getUser() {
+        return currentUser;
+    }
+
     UserService userService;
 
     public SecurityFilter() {
