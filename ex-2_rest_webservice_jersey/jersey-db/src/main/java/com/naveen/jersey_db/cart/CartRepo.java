@@ -35,7 +35,6 @@ public class CartRepo {
 
         List<Product> products = new ArrayList<>();
         try {
-            Statement stmt = con.createStatement();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
 
