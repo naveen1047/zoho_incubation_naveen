@@ -10,7 +10,7 @@ public class DependenciesFactory {
         return cartRepo;
     }
 
-    public static CartServiceImpl getUserService() {
+    public static CartServiceImpl getCartService() {
         if (cartService == null)
             cartService = new CartServiceImpl(getCartRepo());
         return cartService;

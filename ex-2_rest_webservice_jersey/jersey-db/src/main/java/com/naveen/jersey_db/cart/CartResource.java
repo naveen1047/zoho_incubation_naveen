@@ -1,7 +1,6 @@
 package com.naveen.jersey_db.cart;
 
 import com.naveen.jersey_db.product.models.Product;
-import com.naveen.jersey_db.user.filter.SecurityFilter;
 import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,7 +16,7 @@ public class CartResource {
     CartServiceImpl service;
 
     public CartResource() {
-        service = DependenciesFactory.getUserService();
+        service = DependenciesFactory.getCartService();
 
     }
 
