@@ -1,0 +1,7 @@
+u_id,time,action,method,status,message
+"10","2022-05-26T14:35:22.036272300","wallet/10","PUT","200","wallet successful for 10"
+"30","2022-05-26T14:36:28.386878400","users/26","DELETE","401","users not successful for 30"
+"30","2022-05-26T14:36:36.817720700","users/30","DELETE","401","users not successful for 30"
+"4","2022-05-26T14:37:03.733593400","cart/9","PUT","201","cart created successful for 4"
+"9","2022-05-26T14:37:22.336394500","wallet/9","PUT","200","wallet successful for 9"
+"9","2022-05-26T14:37:27.562013","orders/9","POST","200","orders successful for 9"
