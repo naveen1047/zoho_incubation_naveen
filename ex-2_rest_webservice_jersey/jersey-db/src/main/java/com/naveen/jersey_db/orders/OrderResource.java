@@ -3,6 +3,7 @@ package com.naveen.jersey_db.orders;
 import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class OrderResource {
 
     @Path("/{id}")
     @POST
-    public void orderNow(@PathParam("id") int id) {
+    public Response orderNow(@PathParam("id") int id) {
         service.orderNow(id);
+        return Response.ok().build();
     }
 }
