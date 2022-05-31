@@ -16,7 +16,9 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
+import javax.xml.bind.DatatypeConverter;
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -121,14 +123,23 @@ public class SecurityFilter implements ContainerRequestFilter {
 
 
     private boolean verifyIdPassword(int id, String password) {
+
+
         try {
-//            User user = userService.getUserByUsername(id);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            password = DatatypeConverter
+                    .printHexBinary(digest).toUpperCase();
+
             User user = userService.getUserById(id);
             currentUser = user;
-            System.out.println(user.getName() + " pswd: "
-                    + user.getPassword()
-                    + "\nuserPwd: " + password + " " + user.getPassword().equals(password));
-            return user.getPassword().equals(password);
+            System.out.println(
+                    "username: " + user.getName()
+                    + "\n dbPassword: " + user.getPassword()
+                    + "\n given password: " + password
+                    + "\n result:" + user.getPassword().equalsIgnoreCase(password));
+            return user.getPassword().equalsIgnoreCase(password);
         } catch (Exception e) {
             System.out.println(e);
         }

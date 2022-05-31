@@ -6,9 +6,12 @@ import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
 import com.naveen.jersey_db.user.repo.UserRepo;
 import com.opencsv.CSVWriter;
+import lombok.SneakyThrows;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,11 +34,13 @@ public class UserServiceImpl implements UserService {
         return userRepo.getUserById(id);
     }
 
+    @SneakyThrows
     @Override
-    public User createUser(User user) {
+    public void createUser(User user) {
         user.setUri("/user-management/" + user.getId());
         System.out.println(user.getRoles());
-        return userRepo.createUser(user);
+
+        /*return */userRepo.createUser(user);
     }
 
     @Override

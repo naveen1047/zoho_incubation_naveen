@@ -60,9 +60,10 @@ public class UserResource {
         if (user.getName() == null) {
             return Response.status(400).entity("Please provide all mandatory inputs").build();
         }
-        if (userService.createUser(user) != null)
-            return Response.status(201).contentLocation(new URI(user.getUri())).build();
-        return Response.status(500).entity("User didn't created").build();
+        /*if (userService.createUser(user) != null)*/
+        userService.createUser(user);
+            return Response.status(201).build();
+//        return Response.status(500).entity("User didn't created").build();
     }
 
     @GET
