@@ -1,13 +1,16 @@
 package com.naveen.jersey_db.user.resource;
 
+import com.naveen.jersey_db.exception.CustomException;
 import com.naveen.jersey_db.user.models.Role;
 import com.naveen.jersey_db.user.models.User;
 import com.naveen.jersey_db.user.models.Users;
 import com.naveen.jersey_db.user.service.UserService;
 import com.naveen.jersey_db.user.util.DependenciesFactory;
+import com.naveen.jersey_db.util.UserUtils;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "users")
 @Path("users")
+@Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
     UserService userService;
 
@@ -37,7 +41,6 @@ public class UserResource {
 //    }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
     public Users getAllUsersWithRoles() {
         return userService.getAllUsersWithRole();
@@ -45,7 +48,6 @@ public class UserResource {
 
     @Path("/download")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
     public Users getAllUsersWithRolesCSV() {
         return userService.getAllUsersWithRoleCSV();
@@ -65,9 +67,10 @@ public class UserResource {
 
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
-    public Response getUserById(@PathParam("id") int id) throws URISyntaxException {
+    public Response getUserById(@PathParam("id") int id, @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) throws URISyntaxException {
+        if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id))) throw new CustomException("Id didn't match");
+
         User user = userService.getUserById(id);
         if (user == null) {
             return Response.status(404).build();
@@ -80,9 +83,10 @@ public class UserResource {
 
     @PUT
     @Path("/setrole/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
-    public Response setRolesById(@PathParam("id") int id, List<Role> roleList) throws URISyntaxException {
+    public Response setRolesById(@PathParam("id") int id, List<Role> roleList, @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) throws URISyntaxException {
+        if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id))) throw new CustomException("Id didn't match");
+
         User user = userService.getUserById(id);
         userService.setUserRolesById(id, roleList.stream().collect(Collectors.toSet()));
         if (user == null) {
@@ -97,9 +101,9 @@ public class UserResource {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("ADMIN")
-    public Response updateUser(@PathParam("id") int id, User user) throws URISyntaxException {
+    public Response updateUser(@PathParam("id") int id, User user, @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) throws URISyntaxException {
+        if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id))) throw new CustomException("Id didn't match");
         User temp = userService.getUserById(id);
         if (user == null) {
             return Response.status(404).build();
@@ -111,7 +115,8 @@ public class UserResource {
     @DELETE
     @Path("/{id}")
     @RolesAllowed("ADMIN")
-    public Response deleteUser(@PathParam("id") int id) throws URISyntaxException {
+    public Response deleteUser(@PathParam("id") int id, @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) throws URISyntaxException {
+        if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id))) throw new CustomException("Id didn't match");
         User user = userService.getUserById(id);
         if (user != null) {
             userService.deleteUser(id);
