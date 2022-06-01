@@ -34,11 +34,14 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
         System.out.println(Arrays.stream(uri.split("/")).findFirst().get().equals("users"));
         System.out.println(requestContext.getMethod().equalsIgnoreCase("POST"));
 
-        boolean compare = Arrays.stream(uri.split("/")).findFirst().get().equals("users")
+        boolean compare1 = Arrays.stream(uri.split("/")).findFirst().get().equals("users")
                 && requestContext.getMethod().equalsIgnoreCase("POST");
+        boolean compare2 = !Arrays.stream(uri.split("/")).findFirst().get().equals("auth");
 
-        if (!requestContext.getMethod().equalsIgnoreCase("GET")
-                && !compare
+        System.out.println("compare2" + compare2);
+
+        if ((!requestContext.getMethod().equalsIgnoreCase("GET")
+                && !compare1) /*|| compare2*/
         ) {
             String method = requestContext.getMethod();
             String status = String.valueOf(responseContext.getStatus());

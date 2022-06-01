@@ -15,4 +15,13 @@ public class UserUtils {
         StringTokenizer tokenizer = new StringTokenizer(userpass, ":");
         return tokenizer.nextToken();
     }
+
+    public static String getUserPassword(String usernamePassword) {
+        String AUTHENTICATION_SCHEME = "Basic";
+        String encodeUsernamePassword = usernamePassword.replaceFirst(AUTHENTICATION_SCHEME + " ", "");
+        String userpass = new String(Base64.getDecoder().decode(encodeUsernamePassword));
+        StringTokenizer tokenizer = new StringTokenizer(userpass, ":");
+        tokenizer.nextToken();
+        return tokenizer.nextToken();
+    }
 }
