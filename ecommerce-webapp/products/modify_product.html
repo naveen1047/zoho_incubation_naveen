@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="addProduct.js"></script>
+    <script src="modifyProduct.js"></script>
+    <script src="delProduct.js"></script>
+
+</head>
+
+<body>
+</body>
+
+<h2>add</h2>
+<form id="addProduct" onsubmit="return false">
+    <label for="name">name: </label>
+    <input type="text" id="name" required /><br>
+    <label for="price">price: </label>
+    <input type="text" id="price" required><br>
+    <input type="submit" onclick="addProduct()" value="add product">
+</form><br>
+
+<h2>edit / delete</h2>
+<table id="prd_table"></table>
+
+
+</html>

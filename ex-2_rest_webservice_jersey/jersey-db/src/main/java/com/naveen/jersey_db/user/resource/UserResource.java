@@ -63,9 +63,8 @@ public class UserResource {
             return Response.status(400).entity("Please provide all mandatory inputs").build();
         }
         /*if (userService.createUser(user) != null)*/
-        userService.createUser(user);
-            return Response.status(201).build();
-//        return Response.status(500).entity("User didn't created").build();
+        User user1 = userService.createUser(user);
+        return Response.accepted(user1).status(201).build();
     }
 
     @GET

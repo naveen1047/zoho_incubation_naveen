@@ -31,6 +31,7 @@ public class OrderResource {
 
     @Path("/{id}")
     @POST
+    @PermitAll
     public Response orderNow(@PathParam("id") int id,
                              @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) {
         if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id))) throw new CustomException("Id didn't match");

@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
         user.setUri("/user-management/" + user.getId());
         System.out.println(user.getRoles());
 
-        /*return */userRepo.createUser(user);
+        return userRepo.createUser(user);
     }
 
     @Override

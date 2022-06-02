@@ -2,20 +2,18 @@
 <html>
 
 <head>
-    <script src="login.js"></script>
+    <script src="signup.js"></script>
 </head>
 
 <body>
     <center>
-        <form id="loginForm" onsubmit="return false">
+        <form id="signupForm" onsubmit="return false">
             <label for="id">User id: </label>
             <input type="text" id="id" required /><br>
             <label for="password">password: </label>
             <input type="text" id="password" required><br>
-            <input type="submit" onclick="login()" value="Login">
-        </form><br>
-
-        <a href="../signup/signup.html">create new user</a>
+            <input type="submit" onclick="signup()" value="signup">
+        </form>
 
     </center>
 </body>

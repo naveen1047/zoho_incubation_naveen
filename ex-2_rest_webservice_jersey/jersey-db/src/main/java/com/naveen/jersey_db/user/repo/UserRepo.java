@@ -198,10 +198,11 @@ public class UserRepo {
         return userRolesList.get(0);
     }
 
-    public void createUser(User user) {
+    public User createUser(User user) {
         String sql = "INSERT INTO users\n" +
                 "(password, name, url)\n" +
                 "VALUES (md5(?), ?, ?)";
+        int id = -1;
 
         try {
             PreparedStatement st = con.prepareStatement(sql);
@@ -211,12 +212,22 @@ public class UserRepo {
             st.setString(3, user.getUri());
 
             st.executeUpdate();
+
+
+            sql = "select last_insert_id();";
+            st = con.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
         } catch (Exception e) {
             System.out.println("error");
             System.out.println(e.getMessage());
             e.printStackTrace();
             throw new CustomException(e.getMessage());
         }
+        return getUserById(id);
 //        return getUserByUsernamePassword(user.getName(), user.getPassword());
     }
 

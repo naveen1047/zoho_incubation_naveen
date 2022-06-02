@@ -62,6 +62,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
+
         Method method = resourceInfo.getResourceMethod();
         //Access allowed for all
         if (!method.isAnnotationPresent(PermitAll.class)) {

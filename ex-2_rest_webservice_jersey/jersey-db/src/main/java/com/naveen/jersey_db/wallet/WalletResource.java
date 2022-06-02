@@ -2,6 +2,7 @@ package com.naveen.jersey_db.wallet;
 
 import com.naveen.jersey_db.exception.CustomException;
 import com.naveen.jersey_db.util.UserUtils;
+import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -20,6 +21,7 @@ public class WalletResource {
 
     @GET
     @Path("/{id}")
+    @PermitAll
     public Wallet getWallet(@PathParam("id") int id,
                             @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) {
         if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id)))
@@ -29,6 +31,7 @@ public class WalletResource {
 
     @PUT
     @Path("/{id}")
+    @PermitAll
     public Wallet setWallet(@PathParam("id") int id, Wallet wallet,
                             @HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) {
         if (!UserUtils.compareUserIdAuthId(authorization, String.valueOf(id)))

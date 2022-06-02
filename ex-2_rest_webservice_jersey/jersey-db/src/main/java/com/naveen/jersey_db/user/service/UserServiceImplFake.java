@@ -30,11 +30,11 @@ public class UserServiceImplFake implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
         user.setId(userRepoFake.getAllUser().getUsers().size() + 1);
         user.setUri("/user-management/" + user.getId());
         System.out.println(user.getRoles());
-        userRepoFake.createUser(user);
+        return userRepoFake.createUser(user);
     }
 
     @Override
