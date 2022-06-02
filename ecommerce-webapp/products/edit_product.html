@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="editProduct.js"></script>
+    <script>
+        onload = function () {
+            var pid = localStorage.getItem('pid');
+            var pname = localStorage.getItem('pname');
+            var pprice = localStorage.getItem('pprice');
+
+            document.getElementById('id').innerText = pid;
+            var name = document.getElementById('name');
+            var price = document.getElementById('price');
+            console.log(pname + " " + typeof (pname));
+            name.setAttribute('value', pname);
+            price.setAttribute('value', pprice);
+        }
+
+    </script>
+</head>
+
+<body>
+</body>
+
+<h2>Edit</h2>
+<form id="editProduct" onsubmit="return false">
+    <label>id: <b id="id"></b></label><br>
+    <label for="name">name: </label>
+    <input type="text" id="name" required /><br>
+    <label for="price">price: </label>
+    <input type="text" id="price" required><br>
+    <input type="submit" onclick="edit()" value="edit product">
+</form><br>
+
+
+
+</html>

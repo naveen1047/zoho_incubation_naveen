@@ -22,7 +22,6 @@ function del(pid) {
                 throw new Error(xhr.response);
             }
         }
-
     }
 
 

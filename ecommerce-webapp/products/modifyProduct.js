@@ -1,12 +1,36 @@
 let request = new XMLHttpRequest();
 
 function edit(id) {
-    console.log(id);
+    let xhr = new XMLHttpRequest();
+    localStorage.setItem('pid', id);
+    let url = 'http://localhost:8080/jersey-db/webapi/products/' + id;
+
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4) {
+            if (xhr.status == 200) {
+                var bear = JSON.parse(xhr.response);
+                console.log(bear);
+
+                localStorage.setItem('pname', bear.name);
+                localStorage.setItem('pprice', bear.price);
+                location.replace('edit_product.html');
+
+            } else {
+                throw new Error(xhr.response);
+            }
+        }
+
+    }
+
+    xhr.open('GET', url);
+    xhr.send();
 }
 
-// function del(id) {
-//     console.log(id);
-// }
+function del(id) {
+    // localStorage.setItem('pid', id);
+    console.log(id);
+}
 
 request.onreadystatechange = function () {
     if (request.readyState === 4) {
