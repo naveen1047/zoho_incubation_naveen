@@ -8,10 +8,11 @@
 <body>
     <center>
         <form id="signupForm" onsubmit="return false">
-            <label for="id">User id: </label>
+            <label for="id">User name: </label>
             <input type="text" id="id" required /><br>
             <label for="password">password: </label>
             <input type="text" id="password" required><br>
+            <input type="checkbox" name="isAdmin" id="adminChkBox">is admin</input><br>
             <input type="submit" onclick="signup()" value="signup">
         </form>
 

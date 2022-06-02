@@ -3,10 +3,51 @@
 
 <head>
     <script>
-        window.onload = function () {
+        onload = function () {
             var id = localStorage.getItem("id");
             var idElem = document.getElementById("id");
             idElem.innerText = id;
+            isAdmin();
+        }
+
+        function buildUserLink() {
+            var users = document.getElementById('users');
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            var name = document.createTextNode('users');
+            a.setAttribute('href', 'users/users.html');
+            a.appendChild(name);
+
+            li.appendChild(a);
+            users.appendChild(li);
+        }
+
+        function isAdmin() {
+            var id = localStorage.getItem("id");
+            var uid = localStorage.getItem("uid");
+            var url = "http://localhost:8080/jersey-db/webapi/isAdmin/" + id;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.setRequestHeader("Authorization", uid);
+            var id = document.getElementById('id');
+
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    id.setAttribute('style', "color:Blue;");
+
+                    buildUserLink();
+                } else if (xhr.status == 401) {
+                    id.setAttribute('style', "color:green;");
+                } else {
+
+                    id.setAttribute('style', "color:red;");
+                }
+            };
+
+
+            xhr.send();
         }
 
         function logout() {
@@ -25,6 +66,7 @@
         <li><a href="cart/cart.html">cart</a></li>
         <li><a href="orders/orders.html">orders</a></li>
         <li><a href="wallet/wallet.html">wallet</a></li>
+        <div id="users"></div>
     </ul>
 </body>
 
