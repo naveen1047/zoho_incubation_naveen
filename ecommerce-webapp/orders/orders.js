@@ -90,7 +90,7 @@ xhr.onreadystatechange = function () {
             console.log(bears);
 
             bears.forEach(order => {
-                products(order.products, 't_' + order.tid, order.total, order.time);
+                products(order.products, 't_' + order.tid, order.total, order.dateTime);
             });
         } else {
             throw new Error(xhr.response);

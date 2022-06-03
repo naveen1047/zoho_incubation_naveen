@@ -18,6 +18,7 @@ public class Orders {
     private int uId;
     private int tId;
     private Date date;
+    private String dateTime;
     private Time time;
     private List<Product> products;
     private double total;

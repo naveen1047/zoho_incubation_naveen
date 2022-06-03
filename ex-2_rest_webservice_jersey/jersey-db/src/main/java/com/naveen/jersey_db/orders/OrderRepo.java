@@ -82,6 +82,8 @@ public class OrderRepo {
                     orders1.setUId(id);
                     orders1.setTId(tID);
                     orders1.setTime(rs.getTime(6));
+                    System.out.println(rs.getString(6));
+                    orders1.setDateTime(rs.getString(6));
                     orders1.setDate(rs.getDate(6));
                     orders1.setTotal(price);
 
