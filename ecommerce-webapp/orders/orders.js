@@ -4,7 +4,6 @@ var uid = localStorage.getItem('uid');
 
 if (uid == null || id == null) {
     alert('login again');
-
 }
 var url = 'http://localhost:8080/jersey-db/webapi/orders/' + id;
 

@@ -28,12 +28,17 @@ public class AuthResource {
     @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
     public Response authenticate(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) {
-        System.out.println(authorization);
-        int id = Integer.parseInt(UserUtils.getUserId(authorization));
-        String password = UserUtils.getUserPassword(authorization);
+        try {
+            System.out.println(authorization);
+            int id = Integer.parseInt(UserUtils.getUserId(authorization));
+            String password = UserUtils.getUserPassword(authorization);
 
-        if (verifyIdPassword(id, password))
-            return Response.ok(authorization).build();
+            if (verifyIdPassword(id, password))
+                return Response.ok(authorization).build();
+        } catch (Exception e) {
+            System.out.println("here..");
+            System.out.println(e.getMessage());
+        }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 

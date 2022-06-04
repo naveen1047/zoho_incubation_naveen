@@ -33,7 +33,6 @@ xhr.onreadystatechange = function () {
 
             document.getElementById('cart_table').appendChild(row);
 
-
             // data
             bears.forEach(p => {
                 isEmpty = false;

@@ -5,17 +5,26 @@ function login() {
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
+    xhr.withCredentials = false;
 
     var id = document.getElementById("id").value;
     var password = document.getElementById("password").value;
-    var form = document.getElementById('loginForm');
 
     var encryptedUserPassword = "Basic " + btoa(id + ":" + password);
 
     localStorage.setItem("uid", encryptedUserPassword);
     localStorage.setItem("id", id);
+    try {
+        // xhr.setRequestHeader("host", "localhost:8080");
+        xhr.setRequestHeader("Authorization", encryptedUserPassword);
+        xhr.send();
+    }
+    catch (e) {
+        console.log(e);
+        alert(e);
+    }
 
-    xhr.setRequestHeader("Authorization", encryptedUserPassword);
+    console.log(xhr);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -27,5 +36,4 @@ function login() {
         }
     };
 
-    xhr.send();
 }
