@@ -1,5 +1,3 @@
-// chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security
-
 function login() {
     var url = "http://localhost:8080/jersey-db/webapi/auth/";
 
@@ -10,13 +8,19 @@ function login() {
     var id = document.getElementById("id").value;
     var password = document.getElementById("password").value;
 
+    if (id == "" || password == "") {
+        alert("enter valid fields");
+        return false;
+    }
+
     var encryptedUserPassword = "Basic " + btoa(id + ":" + password);
 
     localStorage.setItem("uid", encryptedUserPassword);
     localStorage.setItem("id", id);
     try {
-        // xhr.setRequestHeader("host", "localhost:8080");
         xhr.setRequestHeader("Authorization", encryptedUserPassword);
+        // xhr.setRequestHeader(
+        //     "Access-Control-Allow-Origin", "*")
         xhr.send();
     }
     catch (e) {
@@ -31,8 +35,9 @@ function login() {
             location.replace("../home.html");
             console.log(xhr.status);
             console.log(xhr.responseText);
-        } else if (xhr.status === 500) {
+        } else if (xhr.readyState == 4) {
             alert("Incorrect username or password");
+            return false;
         }
     };
 

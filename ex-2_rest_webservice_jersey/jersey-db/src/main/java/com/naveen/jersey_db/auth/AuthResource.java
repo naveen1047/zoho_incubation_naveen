@@ -16,10 +16,10 @@ import jakarta.ws.rs.core.Response;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 
+
 @Path("auth")
 public class AuthResource {
     UserService userService;
-
     public AuthResource() {
         this.userService = DependenciesFactory.getUserService();
     }
@@ -28,23 +28,20 @@ public class AuthResource {
     @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
     public Response authenticate(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorization) {
-        try {
-            System.out.println(authorization);
-            int id = Integer.parseInt(UserUtils.getUserId(authorization));
-            String password = UserUtils.getUserPassword(authorization);
+        System.out.println(authorization);
+        int id = Integer.parseInt(UserUtils.getUserId(authorization));
+        String password = UserUtils.getUserPassword(authorization);
 
-            if (verifyIdPassword(id, password))
-                return Response.ok(authorization).build();
-        } catch (Exception e) {
-            System.out.println("here..");
-            System.out.println(e.getMessage());
-        }
+        System.out.println(id + " " + password);
+        System.out.println(verifyIdPassword(id, password));
+        if (verifyIdPassword(id, password))
+            return Response.ok(authorization).build();
+
+        System.out.println("incorrect user id or password");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     private boolean verifyIdPassword(int id, String password) {
-
-
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
